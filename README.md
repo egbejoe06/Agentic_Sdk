@@ -46,7 +46,7 @@ npm run demo:whirlpool
 # Multi-agent: A funds B, B sends SOL
 npm run demo:multi
 
-# Two-agent: A swaps SOL→USDC and sends to B; B adds liquidity
+# Two-agent: A swaps SOL→USDC and sends to B
 npm run demo:two-agent
 ```
 

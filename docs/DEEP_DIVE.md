@@ -29,11 +29,11 @@ async function main() {
   });
 
   // Option 2: Load existing from env (WALLET_SECRET_KEY)
-  // const wallet = await createAgenticWallet({
-  //   connection,
-  //   keypair: loadKeypairFromEnv()!,
-  //   policy: { maxTxSol: 0.5 },
-  // });
+   const wallet = await createAgenticWallet({
+     connection,
+     keypair: loadKeypairFromEnv()!,
+     policy: { maxTxSol: 0.5 },
+   });
 
   console.log("Wallet:", wallet.getPublicKey());
   console.log("Balance:", await wallet.getBalance(), "SOL");
@@ -182,7 +182,7 @@ Multiple agents can each have their own wallet and policy.
 - **Creation:** Wallets can be created from env (e.g. `WALLET_SECRET_KEY`, `WALLET_SECRET_KEY_B`), from `Keypair.generate()`, or from a private key. `createAgenticWallet({ connection, keypair, policy })` is the common factory.
 - **Demos:**
   - **multiAgentDemo.ts:** Wallet A (from env) and Wallet B (new keypair). A funds B; B then sends SOL. Shows two independent agents with separate wallets and policies.
-  - **twoAgentSwapAndLpDemo.ts:** Agent A swaps SOL → USDC and sends USDC (and SOL) to Agent B; Agent B adds liquidity to an Orca Whirlpool. Same pattern: two wallets, two agents, each with its own tools and `execute()` path.
+  - **twoAgentSwapAndLpDemo.ts:** Agent A swaps SOL → USDC and sends USDC (and SOL) to Agent B. Same pattern: two wallets, two agents, each with its own tools and `execute()` path.
 
 In all cases, agent logic (prompts, tool choice, reasoning) lives in the agent; key handling, policy, simulation, and signing stay inside the wallet. This keeps the system scalable (many agents, many wallets) and secure (no key sharing, per-wallet policies).
 
