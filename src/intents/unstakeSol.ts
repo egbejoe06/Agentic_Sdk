@@ -5,9 +5,6 @@ export function isUnstakeSolIntent(intent: Intent): intent is Intent & { type: "
   return intent.type === "unstake_sol";
 }
 
-/**
- * Build a deactivate instruction for an existing stake account.
- */
 export function buildUnstakeSolInstructions(
   authority: PublicKey,
   intent: Extract<Intent, { type: "unstake_sol" }>

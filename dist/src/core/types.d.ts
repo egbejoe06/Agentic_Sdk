@@ -1,9 +1,4 @@
-/**
- * Shared types for the agentic wallet SDK.
- * Design: wallet understands intents only — no AI/agent logic here.
- */
 import type { Connection, Keypair } from "@solana/web3.js";
-/** Policy rules enforced before any transaction is signed. */
 export interface WalletPolicy {
     maxTxSol?: number;
     maxDailySol?: number;
@@ -11,7 +6,6 @@ export interface WalletPolicy {
     allowedPrograms?: string[];
     cooldownSeconds?: number;
 }
-/** Supported intents the wallet can execute. */
 export type Intent = {
     type: "transfer_sol";
     to: string;
@@ -52,27 +46,21 @@ export type Intent = {
 } | {
     type: "whirlpool_add_liquidity";
     poolAddress: string;
-    /** Amount of token A to add (native units, e.g. smallest decimals). */
     tokenAmountA: string | number;
-    /** Amount of token B to add (native units). */
     tokenAmountB: string | number;
     slippageToleranceBps?: number;
-    /** "full_range" or "concentrated". Concentrated requires lowerPrice and upperPrice. */
     mode: "full_range" | "concentrated";
     lowerPrice?: number;
     upperPrice?: number;
 } | {
     type: "whirlpool_harvest";
-    /** Position NFT mint address (identifies the Whirlpool position). */
     positionMintAddress: string;
 };
-/** Configuration to create an AgenticWallet. */
 export interface AgenticWalletConfig {
     connection: Connection;
     keypair: Keypair;
     policy: WalletPolicy;
 }
-/** Result of execute(intent). */
 export interface ExecuteResult {
     success: boolean;
     signature?: string;

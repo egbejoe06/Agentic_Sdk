@@ -1,14 +1,6 @@
-/**
- * LangChain tools that call wallet.execute(intent).
- * Agent decides when to call these; wallet layer validates, simulates, signs.
- */
 import * as z from "zod";
 import type { AgenticWallet } from "../core/AgenticWallet.js";
 import type { Intent } from "../core/types.js";
-/**
- * Create LangChain tools that wrap the wallet's execute(intent) and getBalance().
- * Each tool returns a string result for the agent to read.
- */
 export declare function createWalletTools(wallet: AgenticWallet): (import("langchain").DynamicStructuredTool<z.ZodObject<{
     to: z.ZodString;
     amount: z.ZodNumber;
@@ -31,6 +23,12 @@ export declare function createWalletTools(wallet: AgenticWallet): (import("langc
     to: string;
     amount: number;
 }, string, "transfer_spl"> | import("langchain").DynamicStructuredTool<z.ZodObject<{}, z.core.$strip>, Record<string, never>, Record<string, never>, string, "get_balance"> | import("langchain").DynamicStructuredTool<z.ZodObject<{
+    mint: z.ZodString;
+}, z.core.$strip>, {
+    mint: string;
+}, {
+    mint: string;
+}, string, "get_token_balance"> | import("langchain").DynamicStructuredTool<z.ZodObject<{
     amount: z.ZodNumber;
     validator: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, {

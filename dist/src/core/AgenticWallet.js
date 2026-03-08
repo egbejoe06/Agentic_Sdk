@@ -28,16 +28,10 @@ export class AgenticWallet {
         this.sandbox = new Sandbox(config.connection);
         this.signer = new SecureSigner(config.keypair);
     }
-    /**
-     * Load an AgenticWallet from a private key (base58 or number array).
-     */
     static async loadFromPrivateKey(connection, privateKey, policy) {
         const keypair = loadKeypairFromPrivateKey(privateKey);
         return new AgenticWallet({ connection, keypair, policy: policy ?? { maxTxSol: 1 } });
     }
-    /**
-     * Load an AgenticWallet from an environment variable.
-     */
     static async loadFromEnv(connection, envVarName, policy) {
         const keypair = loadKeypairFromEnv(envVarName);
         if (!keypair) {
@@ -46,12 +40,10 @@ export class AgenticWallet {
         return new AgenticWallet({ connection, keypair, policy: policy ?? { maxTxSol: 1 } });
     }
     async execute(intent) {
-        // 1. Policy Check
         const validation = this.policyEngine.validate(intent);
         if (!validation.allowed) {
             return { success: false, error: validation.reason ?? "Policy rejected" };
         }
-        // 2. Build Transaction
         let transaction;
         let lastValidBlockHeight;
         try {
@@ -62,19 +54,16 @@ export class AgenticWallet {
         catch (err) {
             return { success: false, error: `Failed to build transaction: ${err.message}` };
         }
-        // 3. Sandbox Simulation (Dry Run)
         const sim = await this.sandbox.simulate(transaction);
         if (!sim.ok) {
             return { success: false, error: sim.error ?? "Simulation failed" };
         }
-        // 4. Secure Signing
         try {
             this.signer.sign(transaction);
         }
         catch (err) {
             return { success: false, error: `Signing failed: ${err.message}` };
         }
-        // 5. Broadcast (Confirm)
         try {
             const signature = await this.config.connection.sendRawTransaction(transaction.serialize());
             await this.config.connection.confirmTransaction({
@@ -127,7 +116,6 @@ export class AgenticWallet {
             transaction.add(buildInteractProgramInstruction(intent));
         }
         else {
-            // Exhaustiveness guard for future intent types
             const _exhaustiveCheck = intent;
             throw new Error(`Intent type "${intent.type}" not yet supported in this version.`);
         }
@@ -140,10 +128,6 @@ export class AgenticWallet {
         const balance = await this.config.connection.getBalance(this.config.keypair.publicKey);
         return balance / 1e9;
     }
-    /**
-     * Gets the balance of a specific SPL token (e.g. devUSDC).
-     * Returns the human-readable amount (e.g. 5.5 USDC).
-     */
     async getTokenBalance(mintAddress) {
         const mint = new PublicKey(mintAddress);
         const ata = await getAssociatedTokenAddress(mint, this.config.keypair.publicKey);
@@ -155,6 +139,21 @@ export class AgenticWallet {
             const msg = error instanceof Error ? error.message : String(error);
             if (msg.includes("could not find account")) {
                 return 0;
+            }
+            throw new Error(`Failed to fetch token balance: ${msg}`);
+        }
+    }
+    async getTokenBalanceNative(mintAddress) {
+        const mint = new PublicKey(mintAddress);
+        const ata = await getAssociatedTokenAddress(mint, this.config.keypair.publicKey);
+        try {
+            const balanceInfo = await this.config.connection.getTokenAccountBalance(ata);
+            return balanceInfo.value.amount;
+        }
+        catch (error) {
+            const msg = error instanceof Error ? error.message : String(error);
+            if (msg.includes("could not find account")) {
+                return "0";
             }
             throw new Error(`Failed to fetch token balance: ${msg}`);
         }

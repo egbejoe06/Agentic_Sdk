@@ -1,8 +1,3 @@
-/**
- * Intent: transfer SPL tokens to a recipient.
- * Used by wallet.execute({ type: "transfer_spl", mint, to, amount }).
- */
-
 import { PublicKey } from "@solana/web3.js";
 import {
   createTransferInstruction,
@@ -14,7 +9,6 @@ export function isTransferSplIntent(intent: Intent): intent is Intent & { type: 
   return intent.type === "transfer_spl";
 }
 
-/** Build an SPL token transfer instruction from the intent. Amount is in token base units (smallest decimals). */
 export function buildTransferSplInstruction(
   fromPubkey: PublicKey,
   intent: Intent & { type: "transfer_spl" }

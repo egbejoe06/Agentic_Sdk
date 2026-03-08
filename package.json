@@ -10,7 +10,7 @@
     "demo:whirlpool": "node dist/demo/whirlpoolSwapDemo.js",
     "demo:agent": "node dist/demo/testAgent.js",
     "demo:multi": "node dist/demo/multiAgentDemo.js",
-    "demo:two-agent": "node dist/demo/twoAgentSwapAndLpDemo.js"
+    "demo:two-agent": "node dist/demo/twoAgentSwap.js"
   },
   "keywords": [],
   "author": "",

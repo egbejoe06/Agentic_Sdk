@@ -14,10 +14,6 @@ export function isWhirlpoolHarvestIntent(
 
 const DEVNET_CONFIG_KEY = "solanaDevnet" as const;
 
-/**
- * Build harvest (collect fees and rewards) instructions for an Orca Whirlpool position.
- * Uses the instruction-based Orca API and converts to web3.js v1 for use with AgenticWallet.
- */
 export async function buildWhirlpoolHarvestInstructions(
   connection: Connection,
   authorityKeypair: Keypair,

@@ -1,13 +1,5 @@
-/**
- * LangChain tools that call wallet.execute(intent).
- * Agent decides when to call these; wallet layer validates, simulates, signs.
- */
 import { tool } from "langchain";
 import * as z from "zod";
-/**
- * Create LangChain tools that wrap the wallet's execute(intent) and getBalance().
- * Each tool returns a string result for the agent to read.
- */
 export function createWalletTools(wallet) {
     const transferSol = tool(async ({ to, amount }) => {
         const intent = { type: "transfer_sol", to, amount };
@@ -52,6 +44,17 @@ export function createWalletTools(wallet) {
         name: "get_balance",
         description: "Get the current SOL balance and wallet public key.",
         schema: z.object({}),
+    });
+    const getTokenBalance = tool(async ({ mint }) => {
+        const uiAmount = await wallet.getTokenBalance(mint);
+        const nativeAmount = await wallet.getTokenBalanceNative(mint);
+        return `Token balance (mint ${mint}): ${uiAmount} (human-readable). Native units for transfer_spl: ${nativeAmount}. Use the native units value as the amount when calling transfer_spl.`;
+    }, {
+        name: "get_token_balance",
+        description: "Get the balance of an SPL token by mint address. Returns both human-readable amount and native (base) units. Use the native units value for transfer_spl amount.",
+        schema: z.object({
+            mint: z.string().describe("Token mint address (base58)"),
+        }),
     });
     const stakeSol = tool(async ({ amount, validator }) => {
         const intent = { type: "stake_sol", amount, validator };
@@ -196,6 +199,7 @@ export function createWalletTools(wallet) {
         transferSol,
         transferSpl,
         getBalance,
+        getTokenBalance,
         stakeSol,
         unstakeSol,
         withdrawStakeSol,

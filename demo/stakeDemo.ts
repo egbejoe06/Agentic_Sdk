@@ -20,7 +20,7 @@ async function testStaking() {
 
   // Test: Stake 0.01 SOL
   console.log("\n[Test] Attempting to stake 0.01 SOL...");
-  // Jito Vote Account on Devnet: Jito6uSptp9v7idFisE59kF7zYvRJeAn7A2Nis69R6E (same as mainnet for this example)
+  
   const result = await wallet.execute({
     type: "stake_sol",
     amount: 0.01

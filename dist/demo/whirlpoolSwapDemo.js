@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { Connection, clusterApiUrl } from "@solana/web3.js";
 import { createAgenticWallet, loadKeypairFromEnv } from "../src/index.js";
+import { DEV_USDC_MINT } from "../src/constants.js";
 /**
  * Orca Whirlpools swap demo (Solana Devnet).
  *
@@ -14,8 +15,6 @@ import { createAgenticWallet, loadKeypairFromEnv } from "../src/index.js";
 // Devnet pool and mints (from Orca docs – adjust if devnet pool differs)
 const DEVNET_POOL_SOL_USDC = "3KBZiL2g8C7tiJ32hTv5v3KM7aK9htpqTw4cTXz1HvPt";
 const MINT_SOL = "So11111111111111111111111111111111111111112";
-/** Standard devUSDC mint on Solana Devnet (Circle) */
-const DEV_USDC_MINT = "BRjpCHtyQLNCo8gqRUr8jtdAj5AjPYQaoqbvcZiHok1k";
 async function main() {
     console.log("🔄 Orca Whirlpools Swap Demo (Devnet)\n");
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");

@@ -1,8 +1,10 @@
 import "dotenv/config";
 import { createAgent, initChatModel } from "langchain";
+import { DEV_USDC_MINT } from "../constants.js";
 import { createWalletTools } from "./walletTools.js";
 export const DEFAULT_LANGCHAIN_MODEL = "google-genai:gemini-2.5-flash";
-const DEFAULT_SYSTEM_PROMPT = `You are a helpful Solana wallet assistant.
+const DEFAULT_SYSTEM_PROMPT = `You are a helpful Solana wallet assistant on Solana devnet.
+When the user asks for USDC balance, use get_token_balance with mint: ${DEV_USDC_MINT}.
 You can check balances and transfer SOL or SPL tokens.
 You can also interact with Orca Whirlpools:
 - Swap: use whirlpool_swap with pool address, mint address, and either inputAmount or outputAmount in token native units.

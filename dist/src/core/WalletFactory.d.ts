@@ -6,9 +6,5 @@ export interface CreateWalletOptions {
     policy?: WalletPolicy;
     keypair?: Keypair;
 }
-/**
- * Programmatic wallet creation utility (Feature 1).
- * Creates a new AgenticWallet. Fund the wallet with devnet SOL before use.
- */
 export declare function createAgenticWallet(options: CreateWalletOptions): Promise<AgenticWallet>;
 //# sourceMappingURL=WalletFactory.d.ts.map

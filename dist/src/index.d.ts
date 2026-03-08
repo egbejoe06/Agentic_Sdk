@@ -11,6 +11,7 @@ export { PolicyEngine } from "./core/PolicyEngine.js";
 export { Sandbox } from "./core/Sandbox.js";
 export { SecureSigner } from "./core/SecureSigner.js";
 export type { AgenticWalletConfig, ExecuteResult, Intent, WalletPolicy, } from "./core/types.js";
+export { DEV_USDC_MINT } from "./constants.js";
 export { createWalletTools } from "./agent/walletTools.js";
 export { createLangChainAgent, type CreateLangChainAgentOptions, } from "./agent/LangChainAgent.js";
 //# sourceMappingURL=index.d.ts.map

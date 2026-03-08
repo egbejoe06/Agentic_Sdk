@@ -1,17 +1,8 @@
-/**
- * LangChain tools that call wallet.execute(intent).
- * Agent decides when to call these; wallet layer validates, simulates, signs.
- */
-
 import { tool } from "langchain";
 import * as z from "zod";
 import type { AgenticWallet } from "../core/AgenticWallet.js";
 import type { Intent } from "../core/types.js";
 
-/**
- * Create LangChain tools that wrap the wallet's execute(intent) and getBalance().
- * Each tool returns a string result for the agent to read.
- */
 export function createWalletTools(wallet: AgenticWallet) {
   const transferSol = tool(
     async ({ to, amount }) => {

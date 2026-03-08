@@ -97,7 +97,6 @@ Do these in order:
     process.exit(1);
   }
 
-  // No Step 2: no need to add to liquidity pool after send.
 
   const balanceAFinal = await walletA.getBalance();
   const balanceBFinal = await walletB.getBalance();

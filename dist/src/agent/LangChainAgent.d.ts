@@ -28,6 +28,12 @@ export declare function createLangChainAgent(wallet: AgenticWallet, options?: Cr
     to: string;
     amount: number;
 }, string, "transfer_spl"> | import("langchain").DynamicStructuredTool<import("zod").ZodObject<{}, import("zod/v4/core").$strip>, Record<string, never>, Record<string, never>, string, "get_balance"> | import("langchain").DynamicStructuredTool<import("zod").ZodObject<{
+    mint: import("zod").ZodString;
+}, import("zod/v4/core").$strip>, {
+    mint: string;
+}, {
+    mint: string;
+}, string, "get_token_balance"> | import("langchain").DynamicStructuredTool<import("zod").ZodObject<{
     amount: import("zod").ZodNumber;
     validator: import("zod").ZodOptional<import("zod").ZodString>;
 }, import("zod/v4/core").$strip>, {

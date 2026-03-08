@@ -1,7 +1,3 @@
-/**
- * Intent: interact with an arbitrary program (CPI, custom instruction).
- * Used by wallet.execute({ type: "interact_program", programId, data }).
- */
 import { PublicKey, TransactionInstruction } from "@solana/web3.js";
 export function isInteractProgramIntent(intent) {
     return intent.type === "interact_program";
